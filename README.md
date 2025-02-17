@@ -1,3 +1,6 @@
+![Sales Mastery](sales_pic.png)
+
+
 # Sales Mastery
 
 Hey there! This is my sales analysis project in Python.
