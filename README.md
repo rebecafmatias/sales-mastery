@@ -101,4 +101,6 @@ Contributions are welcome\! If you have suggestions for improvements or find any
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](https://www.google.com/url?sa=E&source=gmail&q=LICENSE) file for details.
+This project is open-source and available for personal and educational use.
+
+
