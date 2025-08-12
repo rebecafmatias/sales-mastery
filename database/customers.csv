@@ -1,0 +1,5 @@
+id_customer,name,email,phone,address
+101,John,john@email.com,11999999999,"Example Street, 123"
+102,Mary,mary@email.com,11888888888,"Example Avenue, 456"
+103,Joseph,joseph@email.com,11777777777,"Example Square, 789"
+104,Ana,ana@email.com,11666666666,"Example Road, 101"

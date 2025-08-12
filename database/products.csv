@@ -1,0 +1,5 @@
+id_product,product_name,brand,unit_value,category
+1,dress,x,20,clothing
+2,shirt,y,25,clothing
+3,pants,z,30,clothing
+4,shoes,w,50,shoes
