@@ -24,10 +24,16 @@ def count_rows_df(chosen_df, id_column):
 
 # Challenge 2 – Joining data
 # Perform a merge to join sales with products and customers, creating a single DataFrame with:
-
 # Sale ID, product name, sale value, date, customer name, and category.
-
 # Save this combined DataFrame as sales_full.csv.
+
+merged_df = sales_df.merge(products_df, on='id_product')\
+        .merge(customers_df, on='id_customer')\
+        [['id_sale','product_name','sale_value',
+          'date_reference','name','category']]
+
+merged_df.to_csv('sales_full.csv',index=False)
+
 
 # Challenge 3 – Total sales per product
 # Calculate the total number of sales for each product.
