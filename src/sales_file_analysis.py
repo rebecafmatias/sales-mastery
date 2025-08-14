@@ -1,4 +1,8 @@
 import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+sns.set_theme()
 
 # Challenge 1 – Reading and inspection
 # Read each of the three CSV files using pandas (sales.csv, products.csv, customers.csv).
@@ -34,22 +38,27 @@ merged_df = sales_df.merge(products_df, on='id_product')\
 
 merged_df.to_csv('sales_full.csv',index=False)
 
-
 # Challenge 3 – Total sales per product
 # Calculate the total number of sales for each product.
-
 # Also calculate the total sales value per product.
-
 # Identify the best-selling product by quantity.
-
 # Identify the most profitable product (highest total sales value).
+
+sales_qty = sales_df.groupby(['id_product'])['id_product'].count().reset_index(name='count')
+sales_value = sales_df.groupby(['id_product'])['id_product'].sum(['sale_value']).reset_index(name='sum')
+max_qty_product = sales_qty.nlargest(1,'count')[['id_product']].reset_index(drop=True)
+max_profit_product = sales_value.nlargest(1,'sum')[['id_product']].reset_index(drop=True)
 
 # Challenge 4 – Total sales per customer
 # Calculate the total amount spent by each customer.
-
 # Find the customer with the highest total spending.
-
 # Create a bar chart (matplotlib or seaborn) showing total purchases per customer.
+
+customer_sales_value = sales_df.groupby(['id_customer'])['id_customer'].sum(['sale_value']).reset_index(name='sum')
+customer_highest_total_spending = customer_sales_value.nlargest(1,'sum')[['id_customer']].reset_index(drop=True)
+
+ax = sns.barplot(customer_sales_value,x='id_customer',y='sum')
+ax.bar_label(ax.containers[0],fontsize=10)
 
 # Challenge 5 – Average ticket
 # Calculate the average ticket (average sale value across all sales).
