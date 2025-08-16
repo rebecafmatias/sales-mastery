@@ -62,13 +62,19 @@ ax.bar_label(ax.containers[0],fontsize=10)
 
 # Challenge 5 – Average ticket
 # Calculate the average ticket (average sale value across all sales).
-
 # Calculate the average ticket per customer.
+
+avg_ticket = sales_df.agg({'sale_value':'mean'}).to_frame().T
+avg_ticket_customerID = sales_df.groupby(['id_customer']).agg({'sale_value':'mean'})
+avg_ticket_customer = avg_ticket_customerID.merge(customers_df,on='id_customer')\
+    [['id_customer','name','sale_value']]
+print(avg_ticket_customer)
 
 # Challenge 6 – Value filters
 # Create a DataFrame containing only sales above $30.
-
 # Create another DataFrame containing only sales between $20 and $40.
+
+
 
 # Challenge 7 – Sales by date
 # Group sales by date_reference and count the number of sales for each day.
