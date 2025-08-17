@@ -1,6 +1,8 @@
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+from datetime import datetime
 
 sns.set_theme()
 
@@ -59,6 +61,7 @@ customer_highest_total_spending = customer_sales_value.nlargest(1,'sum')[['id_cu
 
 ax = sns.barplot(customer_sales_value,x='id_customer',y='sum')
 ax.bar_label(ax.containers[0],fontsize=10)
+#plt.show()
 
 # Challenge 5 – Average ticket
 # Calculate the average ticket (average sale value across all sales).
@@ -68,23 +71,38 @@ avg_ticket = sales_df.agg({'sale_value':'mean'}).to_frame().T
 avg_ticket_customerID = sales_df.groupby(['id_customer']).agg({'sale_value':'mean'})
 avg_ticket_customer = avg_ticket_customerID.merge(customers_df,on='id_customer')\
     [['id_customer','name','sale_value']]
-print(avg_ticket_customer)
 
 # Challenge 6 – Value filters
 # Create a DataFrame containing only sales above $30.
 # Create another DataFrame containing only sales between $20 and $40.
 
-
+sales_above_30_df = sales_df[sales_df['sale_value']>30]
+sales_between_20_40_df = sales_df[(sales_df['sale_value']>=20) & (sales_df['sale_value']<=40)]
 
 # Challenge 7 – Sales by date
 # Group sales by date_reference and count the number of sales for each day.
-
 # Create a line chart showing sales trends over time.
+
+sales_by_date_df = sales_df.groupby(['date_reference']).agg({'sale_value':'sum'}).reset_index(names='date_ref')
+sales_by_date_chart = sns.relplot(data = sales_by_date_df, kind='line', x='date_ref',y='sale_value')
+plt.xticks(rotation=45)  # Rotacionar para não sobrepor
+# plt.show()
 
 # Challenge 8 – Sales within a period
 # Create a function that receives a start date and end date and returns the total sales value for that period.
-
 # Test the function with the dates 2024-12-05 to 2024-12-12.
+
+def filter_df_by_dates(start_date: str, end_date: str, df: pd.DataFrame, date_col_name: str) -> pd.DataFrame:
+    start_date_final = datetime.strptime(start_date,'%Y-%m-%d')
+    end_date_final = datetime.strptime(end_date,'%Y-%m-%d')
+    df_final_df = df
+    df_final_df[date_col_name] = pd.to_datetime(df_final_df[date_col_name])
+    sales_filtred_by_date_df = df_final_df[(df_final_df[date_col_name] >= start_date_final) & (df_final_df[date_col_name] <= end_date_final)]
+    
+    return sales_filtred_by_date_df
+
+filtered_df = filter_df_by_dates('2024-12-05','2024-12-12',sales_df,'date_reference')\
+    .sort_values(['date_reference'],ascending=False)
 
 # Challenge 9 – Combined analysis
 # Using the combined DataFrame:
