@@ -122,4 +122,22 @@ most_profitable_category = qty_value_category_sales_df.nlargest(1,'sale_value')[
 # The products they bought
 # Their most recent purchase date
 
+def get_customers_total_purchase() -> float:
+    customer_name = input("Inform the customer's name: ")
+    total_purchase = merged_df[(merged_df['name']==customer_name)].agg({'sale_value':'sum'})
+    return total_purchase
+
+def get_customers_products_bought() -> list:
+    customer_name = input("Inform the customer's name: ")
+    products_bought = merged_df[(merged_df['name']==customer_name)]['product_name'].unique()
+    return products_bought
+
+def get_customers_last_purchase_date() -> datetime:
+    customer_name = input("Inform the customer's name: ")
+    merged_date_df = merged_df
+    merged_date_df['date_reference'] = pd.to_datetime(merged_date_df['date_reference'])
+    last_purchase_date = merged_date_df[(merged_date_df['name']==customer_name)].agg({'date_reference':'max'})
+    return last_purchase_date
+
+
 
