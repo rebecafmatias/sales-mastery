@@ -106,17 +106,20 @@ filtered_df = filter_df_by_dates('2024-12-05','2024-12-12',sales_df,'date_refere
 
 # Challenge 9 – Combined analysis
 # Using the combined DataFrame:
-
 # For each category, show the total sales count and total sales value.
-
 # Determine which category generated the most revenue.
 
+qty_value_category_sales_df = merged_df\
+    .groupby(['category'])\
+    .agg({'sale_value': 'sum', 'id_sale': 'count'})\
+    .reset_index(names='category')\
+    .rename(columns={'id_sale': 'qty_sales'})
+
+most_profitable_category = qty_value_category_sales_df.nlargest(1,'sale_value')['category']
+
 # 💡 Extra: Create a script that asks the user (via input()) for a customer’s name and displays:
-
 # Their total purchases
-
 # The products they bought
-
 # Their most recent purchase date
 
 
